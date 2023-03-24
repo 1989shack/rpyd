@@ -11,13 +11,11 @@ parser.add_argument("-a", "--all", help="outputs all rapyd's api response", acti
 
 args = parser.parse_args()
 
-f = open(f'{args.filename}', 'r')
-params = f.read().replace('\n','')
-f.close()
-
+with open(f'{args.filename}', 'r') as f:
+    params = f.read().replace('\n','')
 path = f'/v1/payouts/{params}'
 response = make_request(env=args.env, method='get', path=path)
-    
+
 if args.all:
     print(json.dumps(response, indent=4))
     exit(0)

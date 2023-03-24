@@ -18,11 +18,11 @@ if confirm.lower() != 'y':
     exit(0)
 
 f = open(f'{args.filename}', 'r')
-path = f'/v1/payments'
+path = '/v1/payments'
 payment = json.load(f)
 
 response = make_request(env=args.env, method='post', path=path, body=payment)
-    
+
 if args.all:
     print(json.dumps(response, indent=4))
 else:

@@ -10,10 +10,8 @@ parser.add_argument("env", help="the rapyd environment")
 
 args = parser.parse_args()
 
-f = open(f'{args.filename}', 'r')
-pomts = f.read().splitlines()
-f.close()
-
+with open(f'{args.filename}', 'r') as f:
+    pomts = f.read().splitlines()
 for pomt in pomts:
     params = f'{pomt}/details?sender_country=MX&sender_currency=MXN&beneficiary_country=MX&payout_currency=MXN&sender_entity_type=company&beneficiary_entity_type=individual&payout_amount=1000'
 
