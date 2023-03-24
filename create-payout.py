@@ -2,7 +2,7 @@
 
 from utilities import make_request
 import json
-import argparse 
+import argparse
 import random
 
 parser = argparse.ArgumentParser(description="Create Payout")
@@ -20,11 +20,11 @@ if confirm.lower() != args.env + str(rand_num):
     exit(0)
 
 f = open(f'{args.filename}', 'r')
-path = f'/v1/payouts'
+path = '/v1/payouts'
 payment = json.load(f)
 
 response = make_request(env=args.env, method='post', path=path, body=payment)
-    
+
 if args.all:
     print(json.dumps(response, indent=4))
 else:

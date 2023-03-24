@@ -10,7 +10,7 @@ parser.add_argument("-a", "--all", help="outputs all rapyd's api response", acti
 
 args = parser.parse_args()
 
-path = f'/v1/issuing/cards'
+path = '/v1/issuing/cards'
 
 response = make_request(env=args.env, method='get', path=path)
 
@@ -27,5 +27,5 @@ for r in response['data']:
         f"{r['ewallet_contact']['id']}, " \
         f"{r['ewallet_contact']['first_name']} {r['ewallet_contact']['first_name']}, " \
         f"{r['ewallet_contact']['phone_number']}"
-       
+
     print(s)

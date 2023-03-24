@@ -31,22 +31,23 @@ def get_unix_time(days=0, hours=0, minutes=0, seconds=0):
 
 def update_timestamp_salt_sig(http_method, path, body):
     if path.startswith('http'):
-        path = path[path.find(f'/v1'):]
+        path = path[path.find('/v1'):]
     salt = generate_salt()
     timestamp = get_unix_time()
     to_sign = (http_method, path, salt, str(timestamp), access_key, secret_key, body)
-    
+
     h = hmac.new(secret_key.encode('utf-8'), ''.join(to_sign).encode('utf-8'), hashlib.sha256)
     signature = base64.urlsafe_b64encode(str.encode(h.hexdigest()))
     return salt, timestamp, signature
 
 def current_sig_headers(salt, timestamp, signature):
-    sig_headers = {'access_key': access_key,
-                   'salt': salt,
-                   'timestamp': str(timestamp),
-                   'signature': signature,
-                   'idempotency': str(get_unix_time()) + salt}
-    return sig_headers
+    return {
+        'access_key': access_key,
+        'salt': salt,
+        'timestamp': str(timestamp),
+        'signature': signature,
+        'idempotency': str(get_unix_time()) + salt,
+    }
 
 def pre_call(http_method, path, body=None):
     str_body = json.dumps(body, separators=(',', ':'), ensure_ascii=False) if body else ''

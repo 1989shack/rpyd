@@ -17,15 +17,15 @@ if confirm.lower() != 'y':
     print("Hosted page not created")
     exit(0)
 
-path = f'/v1/hosted/issuing/activate_card'
+path = '/v1/hosted/issuing/activate_card'
 body = { "ewallet_contact": args.ewallet_contact } 
 
 response = make_request(env=args.env, method='post', path=path, body=body)
-    
+
 if args.all:
     print(json.dumps(response, indent=4))
 else:
     s = f"{response['data']['status']} " \
         f"{response['data']['redirect_url']}"
-       
+
     print(s)
